@@ -1,51 +1,97 @@
-package lk.rupavahini.PPUManagement.asset.studio.controller;
+package lk.rupavahini.PPUManagement.asset.sponsor.controller;
 
-import lk.rupavahini.PPUManagement.asset.studio.dao.StudioDao;
-import lk.rupavahini.PPUManagement.asset.studio.entity.Studio;
-import lk.rupavahini.PPUManagement.util.interfaces.AbstractService;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
+import lk.rupavahini.PPUManagement.asset.sponsor.entity.Sponsor;
+import lk.rupavahini.PPUManagement.asset.sponsor.service.SponsorService;
+import lk.rupavahini.PPUManagement.util.service.MakeAutoGenerateNumberService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@Service
-@CacheConfig( cacheNames = "studio" )
-public class StudioController implements AbstractService<Studio, Integer> {
-    private final StudioDao studiodao;
+import javax.validation.Valid;
 
-    public StudioController(StudioDao studiodao) {
-        this.studiodao = studiodao;
+@Controller
+@RequestMapping("/sponsor")
+public class SponsorController {
+    private final SponsorService sponsorService;
+    private final MakeAutoGenerateNumberService makeAutoGenerateNumberService;
+
+    @Autowired
+    public SponsorController(SponsorService sponsorService, MakeAutoGenerateNumberService makeAutoGenerateNumberService) {
+        this.sponsorService = sponsorService;
+        this.makeAutoGenerateNumberService = makeAutoGenerateNumberService;
     }
 
-    public List<Studio> findAll() {
-        return studiodao.findAll();
+    private String commonThings(Model model, Sponsor sponsor, Boolean addState) {
+        model.addAttribute("sponsor", sponsor);
+        model.addAttribute("addStatus", addState);
+        return "sponsor/addSponsor";
     }
 
-    public Studio findById(Integer id) {
-        return studiodao.getOne(id);
+    @GetMapping
+    public String findAll(Model model) {
+        model.addAttribute("sponsor", sponsorService.findAll());
+        return "sponsor/sponsor";
     }
 
-    public Studio persist(Studio studio) {
-        return studiodao.save(studio);
+
+    @GetMapping("/add")
+    public String addForm(Model model) {
+        return commonThings(model, new Sponsor(), true);
     }
 
-    public boolean delete(Integer id) {
-        studiodao.deleteById(id);
-        return false;
+    @PostMapping(value = {"/save", "/update"})
+    public String persist(@Valid @ModelAttribute Sponsor sponsor, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+        if (bindingResult.hasErrors()) {
+            return commonThings(model, sponsor, true);
+        }
+        if (sponsor.getContactOne() != null) {
+            sponsor.setContactOne(makeAutoGenerateNumberService.phoneNumberLengthValidator(sponsor.getContactOne()));
+        }
+        if (sponsor.getContactTwo() != null) {
+            sponsor.setContactTwo(makeAutoGenerateNumberService.phoneNumberLengthValidator(sponsor.getContactTwo()));
+        }
+        //if sponsor has id that sponsor is not a new sponsor
+        if (sponsor.getId() == null) {
+            //if there is not sponsor in db
+            Sponsor DBSupplier = sponsorService.lastSponsor();
+
+            if (DBSupplier == null) {
+                //need to generate new one
+                sponsor.setCode("SS" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
+            } else {
+                System.out.println("last sponsor not null");
+                //if there is sponsor in db need to get that sponsor's code and increase its value
+                String previousCode = DBSupplier.getCode().substring(2);
+                sponsor.setCode("SS" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
+            }
+            //send welcome message and email
+            if (sponsor.getEmail() != null) {
+                //  emailService.sendEmail(sponsor.getEmail(), "Welcome Message", "Welcome to Kmart Super...");
+            }
+        }
+        redirectAttributes.addFlashAttribute("sponsorDetail",
+                sponsorService.persist(sponsor));
+        return "redirect:/sponsor";
     }
 
-    public List<Studio> search(Studio studio) {
-        ExampleMatcher matcher = ExampleMatcher
-                .matching()
-                .withIgnoreCase()
-                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-        Example<Studio> SponserExample = Example.of(studio, matcher);
-        return studiodao.findAll(SponserExample);
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Integer id, Model model) {
+        return commonThings(model, sponsorService.findById(id), false);
     }
 
-    public Studio lastStudio(){
-        return studiodao.findFirstByOrderByIdDesc();
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id, Model model) {
+        sponsorService.delete(id);
+        return "redirect:/sponsor";
+    }
+
+    @GetMapping("/{id}")
+    public String view(@PathVariable Integer id, Model model) {
+        model.addAttribute("sponsorDetail", sponsorService.findById(id));
+        return "sponsor/sponsor-detail";
     }
 }

@@ -25,8 +25,8 @@ public class Sponsor extends AuditEntity {
     @Column(unique = true)
     private String code;
 
-    @Size(min = 2, message = "Your BRN cannot be accepted")
-    private String brn;
+    /*@Size(min = 2, message = "Your BRN cannot be accepted")
+    private String brn;*/
 
     @Size(max = 10, min = 9, message = "Mobile number length should be contained 10 and 9")
     private String contactOne;
