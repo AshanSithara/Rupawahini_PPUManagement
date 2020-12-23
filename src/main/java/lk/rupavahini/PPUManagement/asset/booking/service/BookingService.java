@@ -1,8 +1,8 @@
-package lk.rupavahini.PPUManagement.asset.studio.service;
+package lk.rupavahini.PPUManagement.asset.booking.service;
 
 
-import lk.rupavahini.PPUManagement.asset.studio.dao.StudioDao;
-import lk.rupavahini.PPUManagement.asset.studio.entity.Studio;
+import lk.rupavahini.PPUManagement.asset.booking.dao.BookingDao;
+import lk.rupavahini.PPUManagement.asset.booking.entity.Booking;
 import lk.rupavahini.PPUManagement.util.interfaces.AbstractService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Example;
@@ -12,42 +12,42 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@CacheConfig( cacheNames = "studio" )
-public class StudioService implements AbstractService<Studio, Integer> {
-    private final StudioDao studiodao;
+@CacheConfig( cacheNames = "booking" )
+public class BookingService implements AbstractService<Booking, Integer> {
+    private final BookingDao bookingDao;
 
-    public StudioService(StudioDao studiodao) {
-        this.studiodao = studiodao;
+    public BookingService(BookingDao Bookingdao) {
+        this.bookingDao = Bookingdao;
     }
 
 
-    public List<Studio> findAll() {
-        return studiodao.findAll();
+    public List<Booking> findAll() {
+        return bookingDao.findAll();
     }
 
-    public Studio findById(Integer id) {
-        return studiodao.getOne(id);
+    public Booking findById(Integer id) {
+        return bookingDao.getOne(id);
     }
 
-    public Studio persist(Studio studio) {
-        return studiodao.save(studio);
+    public Booking persist(Booking booking) {
+        return bookingDao.save(booking);
     }
 
     public boolean delete(Integer id) {
-        studiodao.deleteById(id);
+        bookingDao.deleteById(id);
         return false;
     }
 
-    public List<Studio> search(Studio Studio) {
+    public List<Booking> search(Booking Booking) {
         ExampleMatcher matcher = ExampleMatcher
                 .matching()
                 .withIgnoreCase()
                 .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-        Example<Studio> SponserExample = Example.of(Studio, matcher);
-        return studiodao.findAll(SponserExample);
-    }
+        Example<Booking> BookingExample = Example.of(Booking, matcher);
 
-    public Studio lastStudio(){
-        return studiodao.findFirstByOrderByIdDesc();
+        return bookingDao.findAll(BookingExample);
+    }
+    public Booking lastBooking(){
+        return bookingDao.findFirstByOrderByIdDesc();
     }
 }

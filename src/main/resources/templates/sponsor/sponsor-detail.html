@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/header :: headerFragment}">
     <meta charset="UTF-8">
-    <title>supplier-detail</title>
+    <title>sponsor-detail</title>
 </head>
 <body>
 <nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
@@ -12,11 +12,11 @@
     <div class="row text-center formManagement border-info">
         <!--View List Button-->
         <div class="col">
-            <a href="/supplier" class="btn btn-primary" tabindex="1">
+            <a href="/sponsor" class="btn btn-primary" tabindex="1">
                 <i class="fa fa-list" style="font-size: 20px"></i>&nbsp;&nbsp;View List
             </a>
         </div>
-        <!--Supplier Name-->
+        <!--Sponsor Name-->
         <div class="col">
             <h2 class="text-light text-center">
                 <strong>
@@ -34,7 +34,7 @@
 </div>
 <!--details-->
 <div class="container-fluid bg-dark formBorder">
-    <div class="col-sm-12 flex-column" th:fragment="supplierDetailsFragment">
+    <div class="col-sm-12 flex-column" th:fragment="sponsorDetailsFragment">
         <div class="row">
             <!--Left Side-->
             <div class="form-group col-md-6 col-sm-6 text-left flex-column">
@@ -50,7 +50,7 @@
                 <!--Code-->
                 <div class="form-row text-right">
                     <div class="col-md-4">
-                        <label class="control-label" for="code">Supplier Code :</label>
+                        <label class="control-label" for="code">Sponsor Code :</label>
                     </div>
                     <div class="col-md-8">
                         <p id="code" th:text="${sponsorDetail.code}" class="display_detail"></p></div>
@@ -155,7 +155,7 @@
     </div>
     <!--Back Button-->
     <div class="form-group col-md-12 col-sm-12 text-center flex-column ">
-        <a href="/supplier">
+        <a href="/sponsor">
             <button class="btn btn-dark mb-5" type="button" tabindex="3">
                 <i class="fa fa-arrow-circle-left" style="font-size: 20px"></i>&nbsp; &nbsp;Back
             </button>

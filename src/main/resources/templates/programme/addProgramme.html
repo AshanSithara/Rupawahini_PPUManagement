@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/header :: headerFragment}">
     <meta charset="UTF-8">
-    <title>addSupplier</title>
+    <title>addProgramme</title>
 </head>
 <body>
 <nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
@@ -11,7 +11,7 @@
     <div class="row text-center formManagement border-info">
         <!--View List Button-->
         <div class="col">
-            <a href="/sponsor" class="btn btn-primary" tabindex="1">
+            <a href="/programme" class="btn btn-primary" tabindex="1">
                 <i class="fa fa-list" style="font-size: 20px"></i>&nbsp;&nbsp;View List
             </a>
         </div>
@@ -34,8 +34,8 @@
 <!--Form Content - start -->
 <div class="container-fluid bg-dark formBorder">
     <div class="col-sm-12 flex-column ">
-        <form id="form" class="form-horizontal" th:action="${addStatus==true?'/sponsor/save':'/sponsor/update'}"
-              th:object="${sponsor}" method="POST" enctype="multipart/form-data">
+        <form id="form" class="form-horizontal" th:action="${addStatus==true?'/programme/save':'/programme/update'}"
+              th:object="${programme}" method="POST" enctype="multipart/form-data">
             <div class="row">
                 <!--Left Side-->
                 <div class="form-group col-md-6 col-sm-6 text-left flex-column">
@@ -48,15 +48,15 @@
                             <input id="id" th:field="*{id}" class="form-control" type="text" readonly/>
                         </div>
                     </div>
-                    <!--Name-->
+                    <!--Programme Name-->
                     <div class="form-row text-right">
                         <div class="col-md-4">
-                            <label class="control-label" for="name">Sponsor Name :</label>
+                            <label class="control-label" for="name">programme Name :</label>
                         </div>
                         <div class="col-md-8">
-                            <input id="name" th:field="*{name}" class="form-control" tabindex="3" type="text" required/>
-                            <span id="nameError" th:errors="*{name}"
-                                  th:if="${#fields.hasErrors('name')}" class="error">Error Name</span>
+                            <input id="name" th:field="*{programmeName}" class="form-control" tabindex="3" type="text" required/>
+                            <span id="nameError" th:errors="*{programmeName}"
+                                  th:if="${#fields.hasErrors('programmeName')}" class="error">Error Name</span>
                         </div>
                     </div>
                     <!--code-->
@@ -70,51 +70,51 @@
                                   th:if="${#fields.hasErrors('code')}" class="error">Error Name</span>
                         </div>
                     </div>
-                    <!--Contact Number One-->
+                    <!--Producer Name-->
                     <div class="form-row text-right">
                         <div class="col-md-4">
-                            <label class="control-label" for="contactOne">Contact No1 :</label>
+                            <label class="control-label" for="name">Producer Name :</label>
                         </div>
                         <div class="col-md-8">
-                            <input id="contactOne" th:field="*{contactOne}" class="form-control mobile" tabindex="5" type="text" maxlength="10" min="9" required/>
-                            <span class="error" th:errors="*{contactOne}"
-                                  th:if="${#fields.hasErrors('contactOne')}" id="mobileOneError">Error Mobile Number</span>
+                            <input id="name" th:field="*{producerName}" class="form-control" tabindex="3" type="text" required/>
+                            <span id="nameError" th:errors="*{producerName}"
+                                  th:if="${#fields.hasErrors('producerName')}" class="error">Error Name</span>
                         </div>
                     </div>
                     <!--Contact Number Two-->
                     <div class="form-row text-right">
                         <div class="col-md-4">
-                            <label class="control-label" for="contactTwo">Contact No2 :</label>
+                            <label class="control-label" for="sponsorName"> Sponsor Name :</label>
                         </div>
                         <div class="col-md-8">
-                            <input id="contactTwo" th:field="*{contactTwo}" class="form-control mobile" tabindex="6" type="text" maxlength="10" min="9"/>
-                            <span class="error" th:errors="*{contactTwo}"
-                                  th:if="${#fields.hasErrors('contactTwo')}" id="mobileTwoError">Error Mobile Number</span>
+                            <input id="sponsorName" th:field="*{sponsorName}" class="form-control " tabindex="6" type="text" />
+                            <span class="error" th:errors="*{sponsorName}"
+                                  th:if="${#fields.hasErrors('sponsorName')}" id="mobileTwoError">Error Mobile Number</span>
                         </div>
                     </div>
                 </div>
-                <!--Right Side-->
+               <!-- Right Side-->
                 <div class="form-group col-md-6 col-sm-6 text-right flex-column">
                     <!--Email-->
                     <div class="form-row text-right">
                         <div class="col-md-4">
-                            <label class="control-label" for="email">Email :</label>
+                            <label class="control-label" for="broadcastingDate">Broadcasting Date :</label>
                         </div>
                         <div class="col-md-8">
-                            <input id="email" th:field="*{email}" class="form-control" tabindex="7" type="email" required/>
-                            <span class="error" th:errors="*{email}"
-                                  th:if="${#fields.hasErrors('email')}" id="emailError">Error Email</span>
+                            <input id="broadcastingDate" th:field="*{broadcastingDate}" class="form-control" tabindex="7"  required/>
+                            <span class="error" th:errors="*{broadcastingDate}"
+                                  th:if="${#fields.hasErrors('broadcastingDate')}" id="emailError">Error Email</span>
                         </div>
                     </div>
                     <!--Address-->
                     <div class="form-row text-right">
                         <div class="col-md-4">
-                            <label class="control-label" for="address">Address :</label>
+                            <label class="control-label" for="broadcastingTime">Broadcasting Time :</label>
                         </div>
                         <div class="col-md-8">
-                            <textarea id="address" th:field="*{address}" class="form-control" tabindex="8" rows="4" style="font-size: medium" required></textarea>
-                            <span class="error" th:errors="*{address}"
-                                  th:if="${#fields.hasErrors('address')}" id="addressError">Error Address</span>
+                            <textarea id="broadcastingTime" th:field="*{broadcastingTime}" class="form-control" tabindex="8" rows="4" style="font-size: medium" required></textarea>
+                            <span class="error" th:errors="*{broadcastingTime}"
+                                  th:if="${#fields.hasErrors('broadcastingTime')}" id="addressError">Error Address</span>
                         </div>
                     </div>
                     <!--Created by and created at-->
@@ -142,12 +142,12 @@
                 <!--Button-->
                 <div class="form-group col-md-12 col-sm-12 text-center flex-column ">
                     <!--Back Button-->
-                    <a class="btn btn-dark"  tabindex="11" href="/sponsor">
+                    <a class="btn btn-dark"  tabindex="11" href="/programme">
                         <i class="fas fa-arrow-circle-left" style="font-size: 20px"></i>&nbsp;&nbsp;Back
                     </a>
                     <!--Save Button-->
                     <button class="btn btn-success ml-5" type="submit" tabindex="9">
-                        <i class="fa fa-save " style="font-size: 20px"></i>&nbsp;&nbsp;<span id="submit" th:text="${addStatus==true?'Save': '/sponsor/update'}"></span>
+                        <i class="fa fa-save " style="font-size: 20px"></i>&nbsp;&nbsp;<span id="submit" th:text="${addStatus==true?'Save': '/programme/update'}"></span>
                     </button>
                     <!--Cancel Button-->
                     <button class="btn btn-warning ml-5" type="reset" tabindex="10">

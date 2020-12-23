@@ -19,10 +19,13 @@ import javax.validation.constraints.Size;
 public class Studio extends AuditEntity {
 
     @Size(min = 5, message = "Please Enter Studio Name")
-    private String name;
+    private String studioName;
 
     @Size(min = 2 , message = "Enter Studio Condition")
-    private String con;
+    private String location;
+
+    @Size(min = 2 , message = "Enter Studio Condition")
+    private String code;
 
     @ManyToOne
     private Programme programme;

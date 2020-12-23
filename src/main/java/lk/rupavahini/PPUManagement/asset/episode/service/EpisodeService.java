@@ -1,5 +1,4 @@
 package lk.rupavahini.PPUManagement.asset.episode.service;
-
 import lk.rupavahini.PPUManagement.asset.episode.dao.EpisodeDao;
 import lk.rupavahini.PPUManagement.asset.episode.entty.Episode;
 import lk.rupavahini.PPUManagement.util.interfaces.AbstractService;
@@ -10,8 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
 @Service
-@CacheConfig( cacheNames = "casset" )
+@CacheConfig(cacheNames = "episode")
 public class EpisodeService implements AbstractService<Episode, Integer> {
     private final EpisodeDao episodeDao;
 
@@ -46,7 +46,7 @@ public class EpisodeService implements AbstractService<Episode, Integer> {
         return episodeDao.findAll(SponserExample);
     }
 
-    public Episode lastSponsor(){
+    public Episode lastEpisode(){
         return episodeDao.findFirstByOrderByIdDesc();
     }
 }

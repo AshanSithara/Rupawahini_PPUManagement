@@ -1,8 +1,10 @@
-package lk.rupavahini.PPUManagement.asset.sponsor.controller;
+package lk.rupavahini.PPUManagement.asset.studio.controller;
 
 
-import lk.rupavahini.PPUManagement.asset.sponsor.entity.Sponsor;
-import lk.rupavahini.PPUManagement.asset.sponsor.service.SponsorService;
+
+
+import lk.rupavahini.PPUManagement.asset.studio.entity.Studio;
+import lk.rupavahini.PPUManagement.asset.studio.service.StudioService;
 import lk.rupavahini.PPUManagement.util.service.MakeAutoGenerateNumberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,84 +16,93 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/sponsor")
-public class SponsorController {
-    private final SponsorService sponsorService;
+@RequestMapping("/studio")
+public class StudioController {
+    private final StudioService studioService;
     private final MakeAutoGenerateNumberService makeAutoGenerateNumberService;
 
     @Autowired
-    public SponsorController(SponsorService sponsorService, MakeAutoGenerateNumberService makeAutoGenerateNumberService) {
-        this.sponsorService = sponsorService;
+    public StudioController(StudioService studioService, MakeAutoGenerateNumberService makeAutoGenerateNumberService) {
+        this.studioService = studioService;
         this.makeAutoGenerateNumberService = makeAutoGenerateNumberService;
     }
 
-    private String commonThings(Model model, Sponsor sponsor, Boolean addState) {
-        model.addAttribute("sponsor", sponsor);
+    private String commonThings(Model model, Studio studio, Boolean addState) {
+        model.addAttribute("studio", studio);
         model.addAttribute("addStatus", addState);
-        return "sponsor/addSponsor";
+        return "studio/addstudio";
     }
 
     @GetMapping
     public String findAll(Model model) {
-        model.addAttribute("sponsor", sponsorService.findAll());
-        return "sponsor/sponsor";
+        model.addAttribute("studio", studioService.findAll());
+        return "studio/studio";
     }
 
 
     @GetMapping("/add")
     public String addForm(Model model) {
-        return commonThings(model, new Sponsor(), true);
+        return commonThings(model, new Studio(), true);
     }
 
     @PostMapping(value = {"/save", "/update"})
-    public String persist(@Valid @ModelAttribute Sponsor sponsor, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+    public String persist(@Valid @ModelAttribute Studio studio, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
         if (bindingResult.hasErrors()) {
-            return commonThings(model, sponsor, true);
+            return commonThings(model, studio, true);
         }
-        if (sponsor.getContactOne() != null) {
-            sponsor.setContactOne(makeAutoGenerateNumberService.phoneNumberLengthValidator(sponsor.getContactOne()));
-        }
-        if (sponsor.getContactTwo() != null) {
-            sponsor.setContactTwo(makeAutoGenerateNumberService.phoneNumberLengthValidator(sponsor.getContactTwo()));
-        }
-        //if sponsor has id that sponsor is not a new sponsor
-        if (sponsor.getId() == null) {
-            //if there is not sponsor in db
-            Sponsor DBSupplier = sponsorService.lastSponsor();
 
-            if (DBSupplier == null) {
-                //need to generate new one
-                sponsor.setCode("SS" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
-            } else {
-                System.out.println("last sponsor not null");
-                //if there is sponsor in db need to get that sponsor's code and increase its value
-                String previousCode = DBSupplier.getCode().substring(2);
-                sponsor.setCode("SS" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
+        //if studio has id that studio is not a new studio
+        if (studio.getId() == null) {
+            //if there is not studio in db
+            Studio DBSupplier = studioService.lastStudio();
+
+            //get Studio name
+            if (studio.getStudioName() != null) {
+                //  emailService.sendEmail(studio.getEmail(), "Welcome Message", "Welcome to Kmart Super...");
             }
-            //send welcome message and email
-            if (sponsor.getEmail() != null) {
-                //  emailService.sendEmail(sponsor.getEmail(), "Welcome Message", "Welcome to Kmart Super...");
+
+            //get Studio Location
+            if (studio.getLocation() != null) {
+                //  emailService.sendEmail(studio.getEmail(), "Welcome Message", "Welcome to Kmart Super...");
+            }
+
+            if (studio.getId() == null) {
+                //if there is not studio in db
+                Studio DBStudio = studioService.lastStudio();
+
+                if (DBStudio == null) {
+                    //need to generate new one
+                    studio.setCode("St" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
+                } else {
+                    System.out.println("last studio not null");
+                    //if there is studio in db need to get that studio's code and increase its value
+                    String previousCode = DBStudio.getCode().substring(2);
+                    studio.setCode("St" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
+                }
+
             }
         }
-        redirectAttributes.addFlashAttribute("sponsorDetail",
-                sponsorService.persist(sponsor));
-        return "redirect:/sponsor";
+        redirectAttributes.addFlashAttribute("studioDetail",
+                studioService.persist(studio));
+        return "redirect:/studio";
     }
+
+
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
-        return commonThings(model, sponsorService.findById(id), false);
+        return commonThings(model, studioService.findById(id), false);
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Integer id, Model model) {
-        sponsorService.delete(id);
-        return "redirect:/sponsor";
+        studioService.delete(id);
+        return "redirect:/studio";
     }
 
     @GetMapping("/{id}")
     public String view(@PathVariable Integer id, Model model) {
-        model.addAttribute("sponsorDetail", sponsorService.findById(id));
-        return "sponsor/sponsor-detail";
+        model.addAttribute("studioDetail", studioService.findById(id));
+        return "studio/studio-detail";
     }
 }

@@ -11,7 +11,7 @@
     <div class="row text-center formManagement border-info">
         <!--View List Button-->
         <div class="col">
-            <a href="/sponsor" class="btn btn-primary" tabindex="1">
+            <a href="/studio" class="btn btn-primary" tabindex="1">
                 <i class="fa fa-list" style="font-size: 20px"></i>&nbsp;&nbsp;View List
             </a>
         </div>
@@ -34,8 +34,8 @@
 <!--Form Content - start -->
 <div class="container-fluid bg-dark formBorder">
     <div class="col-sm-12 flex-column ">
-        <form id="form" class="form-horizontal" th:action="${addStatus==true?'/sponsor/save':'/sponsor/update'}"
-              th:object="${sponsor}" method="POST" enctype="multipart/form-data">
+        <form id="form" class="form-horizontal" th:action="${addStatus==true?'/studio/save':'/studio/update'}"
+              th:object="${studio}" method="POST" enctype="multipart/form-data">
             <div class="row">
                 <!--Left Side-->
                 <div class="form-group col-md-6 col-sm-6 text-left flex-column">
@@ -51,18 +51,29 @@
                     <!--Name-->
                     <div class="form-row text-right">
                         <div class="col-md-4">
-                            <label class="control-label" for="name">Sponsor Name :</label>
+                            <label class="control-label" for="studioName">studio Name :</label>
                         </div>
                         <div class="col-md-8">
-                            <input id="name" th:field="*{name}" class="form-control" tabindex="3" type="text" required/>
-                            <span id="nameError" th:errors="*{name}"
-                                  th:if="${#fields.hasErrors('name')}" class="error">Error Name</span>
+                            <input id="studioName" th:field="*{studioName}" class="form-control" tabindex="3" type="text" required/>
+                            <span id="nameError" th:errors="*{studioName}"
+                                  th:if="${#fields.hasErrors('studioName')}" class="error">Error Name</span>
+                        </div>
+                    </div>
+                    <!--location-->
+                    <div class="form-row text-right">
+                        <div class="col-md-4">
+                            <label class="control-label" for="location"> Location :</label>
+                        </div>
+                        <div class="col-md-8">
+                            <textarea id="location" th:field="*{location}" class="form-control" tabindex="8" rows="4" style="font-size: medium" required></textarea>
+                            <span class="error" th:errors="*{location}"
+                                  th:if="${#fields.hasErrors('location')}" id="addressError">Error Address</span>
                         </div>
                     </div>
                     <!--code-->
                     <div class="form-row text-right" th:if="${addStatus==false}">
                         <div class="col-md-4">
-                            <label class="control-label" for="name">Code :</label>
+                            <label class="control-label" for="code">Code :</label>
                         </div>
                         <div class="col-md-8">
                             <input id="code" th:field="*{code}" class="form-control" tabindex="3" type="text" required/>
@@ -71,7 +82,7 @@
                         </div>
                     </div>
                     <!--Contact Number One-->
-                    <div class="form-row text-right">
+                    <!--<div class="form-row text-right">
                         <div class="col-md-4">
                             <label class="control-label" for="contactOne">Contact No1 :</label>
                         </div>
@@ -81,7 +92,7 @@
                                   th:if="${#fields.hasErrors('contactOne')}" id="mobileOneError">Error Mobile Number</span>
                         </div>
                     </div>
-                    <!--Contact Number Two-->
+                    &lt;!&ndash;Contact Number Two&ndash;&gt;
                     <div class="form-row text-right">
                         <div class="col-md-4">
                             <label class="control-label" for="contactTwo">Contact No2 :</label>
@@ -92,11 +103,11 @@
                                   th:if="${#fields.hasErrors('contactTwo')}" id="mobileTwoError">Error Mobile Number</span>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <!--Right Side-->
                 <div class="form-group col-md-6 col-sm-6 text-right flex-column">
                     <!--Email-->
-                    <div class="form-row text-right">
+                    <!--<div class="form-row text-right">
                         <div class="col-md-4">
                             <label class="control-label" for="email">Email :</label>
                         </div>
@@ -105,18 +116,8 @@
                             <span class="error" th:errors="*{email}"
                                   th:if="${#fields.hasErrors('email')}" id="emailError">Error Email</span>
                         </div>
-                    </div>
-                    <!--Address-->
-                    <div class="form-row text-right">
-                        <div class="col-md-4">
-                            <label class="control-label" for="address">Address :</label>
-                        </div>
-                        <div class="col-md-8">
-                            <textarea id="address" th:field="*{address}" class="form-control" tabindex="8" rows="4" style="font-size: medium" required></textarea>
-                            <span class="error" th:errors="*{address}"
-                                  th:if="${#fields.hasErrors('address')}" id="addressError">Error Address</span>
-                        </div>
-                    </div>
+                    </div>-->
+
                     <!--Created by and created at-->
                     <div id="updateStatus" th:if="${addStatus==false}">
                         <!--Created by-->
@@ -142,12 +143,12 @@
                 <!--Button-->
                 <div class="form-group col-md-12 col-sm-12 text-center flex-column ">
                     <!--Back Button-->
-                    <a class="btn btn-dark"  tabindex="11" href="/sponsor">
+                    <a class="btn btn-dark"  tabindex="11" href="/studio">
                         <i class="fas fa-arrow-circle-left" style="font-size: 20px"></i>&nbsp;&nbsp;Back
                     </a>
                     <!--Save Button-->
                     <button class="btn btn-success ml-5" type="submit" tabindex="9">
-                        <i class="fa fa-save " style="font-size: 20px"></i>&nbsp;&nbsp;<span id="submit" th:text="${addStatus==true?'Save': '/sponsor/update'}"></span>
+                        <i class="fa fa-save " style="font-size: 20px"></i>&nbsp;&nbsp;<span id="submit" th:text="${addStatus==true?'Save': '/studio/update'}"></span>
                     </button>
                     <!--Cancel Button-->
                     <button class="btn btn-warning ml-5" type="reset" tabindex="10">

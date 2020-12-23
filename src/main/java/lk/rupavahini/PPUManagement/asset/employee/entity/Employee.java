@@ -2,9 +2,9 @@ package lk.rupavahini.PPUManagement.asset.employee.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import lk.rupavahini.PPUManagement.asset.commonAsset.model.Enum.BloodGroup;
 import lk.rupavahini.PPUManagement.asset.commonAsset.model.Enum.CivilStatus;
 import lk.rupavahini.PPUManagement.asset.commonAsset.model.Enum.Gender;
+import lk.rupavahini.PPUManagement.asset.commonAsset.model.Enum.Title;
 import lk.rupavahini.PPUManagement.asset.commonAsset.model.FileInfo;
 import lk.rupavahini.PPUManagement.asset.employee.entity.Enum.Designation;
 import lk.rupavahini.PPUManagement.asset.employee.entity.Enum.EmployeeStatus;
@@ -53,6 +53,9 @@ public class Employee extends AuditEntity {
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @Enumerated( EnumType.STRING )
+    private Title title;
 
 
     @Enumerated(EnumType.STRING)

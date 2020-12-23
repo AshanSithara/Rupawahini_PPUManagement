@@ -1,6 +1,7 @@
-package lk.rupavahini.PPUManagement.asset.sponser.entity;
+package lk.rupavahini.PPUManagement.asset.sponsor.entity;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import lk.rupavahini.PPUManagement.asset.message.entity.EmailMessage;
 import lk.rupavahini.PPUManagement.asset.programme.entity.ProgrammeSponsor;
 import lk.rupavahini.PPUManagement.util.audit.AuditEntity;
 import lombok.*;
@@ -18,6 +19,7 @@ import java.util.List;
 @JsonFilter("Sponsor")
 @ToString
 public class Sponsor extends AuditEntity {
+
 
     @Size(min = 5, message = "Your Company name cannot be accepted")
     private String name;
@@ -42,5 +44,7 @@ public class Sponsor extends AuditEntity {
     @OneToMany(mappedBy = "sponsor", fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     private List<ProgrammeSponsor> programmeSponsors;
+
+
 
 }

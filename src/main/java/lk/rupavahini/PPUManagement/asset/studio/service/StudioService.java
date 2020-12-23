@@ -1,7 +1,8 @@
 package lk.rupavahini.PPUManagement.asset.studio.service;
 
-import lk.rupavahini.PPUManagement.asset.episode.dao.EpisodeDao;
-import lk.rupavahini.PPUManagement.asset.episode.entty.Episode;
+
+import lk.rupavahini.PPUManagement.asset.studio.dao.StudioDao;
+import lk.rupavahini.PPUManagement.asset.studio.entity.Studio;
 import lk.rupavahini.PPUManagement.util.interfaces.AbstractService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Example;
@@ -12,24 +13,24 @@ import java.util.List;
 
 @Service
 @CacheConfig( cacheNames = "studio" )
-public class StudioService implements AbstractService<Episode, Integer> {
-    private final EpisodeDao studiodao;
+public class StudioService implements AbstractService<Studio, Integer> {
+    private final StudioDao studiodao;
 
-    public StudioService(EpisodeDao studiodao) {
+    public StudioService(StudioDao studiodao) {
         this.studiodao = studiodao;
     }
 
 
-    public List<Episode> findAll() {
+    public List<Studio> findAll() {
         return studiodao.findAll();
     }
 
-    public Episode findById(Integer id) {
+    public Studio findById(Integer id) {
         return studiodao.getOne(id);
     }
 
-    public Episode persist(Episode episode) {
-        return studiodao.save(episode);
+    public Studio persist(Studio studio) {
+        return studiodao.save(studio);
     }
 
     public boolean delete(Integer id) {
@@ -37,16 +38,16 @@ public class StudioService implements AbstractService<Episode, Integer> {
         return false;
     }
 
-    public List<Episode> search(Episode episode) {
+    public List<Studio> search(Studio Studio) {
         ExampleMatcher matcher = ExampleMatcher
                 .matching()
                 .withIgnoreCase()
                 .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-        Example<Episode> SponserExample = Example.of(episode, matcher);
+        Example<Studio> SponserExample = Example.of(Studio, matcher);
         return studiodao.findAll(SponserExample);
     }
 
-    public Episode lastSponsor(){
+    public Studio lastStudio(){
         return studiodao.findFirstByOrderByIdDesc();
     }
 }

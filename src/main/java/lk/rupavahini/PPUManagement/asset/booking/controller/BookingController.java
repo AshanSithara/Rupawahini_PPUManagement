@@ -1,10 +1,11 @@
-package lk.rupavahini.PPUManagement.asset.studio.controller;
+package lk.rupavahini.PPUManagement.asset.booking.controller;
 
 
 
 
-import lk.rupavahini.PPUManagement.asset.studio.entity.Studio;
-import lk.rupavahini.PPUManagement.asset.studio.service.StudioService;
+import jdk.jfr.ContentType;
+import lk.rupavahini.PPUManagement.asset.booking.entity.Booking;
+import lk.rupavahini.PPUManagement.asset.booking.service.BookingService;
 import lk.rupavahini.PPUManagement.util.service.MakeAutoGenerateNumberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,93 +17,101 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/studio")
-public class studioController {
-    private final StudioService studioService;
+@RequestMapping("/booking")
+public class BookingController {
+    private final BookingService bookingService;
     private final MakeAutoGenerateNumberService makeAutoGenerateNumberService;
 
     @Autowired
-    public studioController(StudioService studioService, MakeAutoGenerateNumberService makeAutoGenerateNumberService) {
-        this.studioService = studioService;
+    public BookingController(BookingService bookingService, MakeAutoGenerateNumberService makeAutoGenerateNumberService) {
+        this.bookingService = bookingService;
         this.makeAutoGenerateNumberService = makeAutoGenerateNumberService;
     }
 
-    private String commonThings(Model model, Studio studio, Boolean addState) {
-        model.addAttribute("studio", studio);
-        model.addAttribute("addStatus", addState);
-        return "studio/addstudio";
+    private String commonThings(Model model, Booking booking, Boolean addState) {
+        model.addAttribute("booking", booking);
+        /*model.addAttribute("addStatus", addState);*/
+        return "booking/selectable";
     }
 
     @GetMapping
     public String findAll(Model model) {
-        model.addAttribute("studio", studioService.findAll());
-        return "studio/studio";
+        model.addAttribute("booking", bookingService.findAll());
+        return "booking/booking";
     }
 
 
-    @GetMapping("/add")
+    @GetMapping("/selectable")
     public String addForm(Model model) {
-        return commonThings(model, new Studio(), true);
+        return commonThings(model, new Booking(), true);
     }
 
-    @PostMapping(value = {"/save", "/update"})
-    public String persist(@Valid @ModelAttribute Studio studio, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+    @PostMapping("/selectable")
+    public void abc( Booking booking ){
+        System.out.println(booking);
+
+
+
+    }
+
+  /*  @PostMapping(value = {"/save", "/update"})
+    public String persist(@Valid @ModelAttribute Booking booking, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
         if (bindingResult.hasErrors()) {
-            return commonThings(model, studio, true);
+            return commonThings(model, booking, true);
         }
 
-        //if studio has id that studio is not a new studio
-        if (studio.getId() == null) {
-            //if there is not studio in db
-            Studio DBSupplier = studioService.lastStudio();
+        //if booking has id that booking is not a new booking
+        if (booking.getId() == null) {
+            //if there is not booking in db
+            Booking DBSupplier = bookingService.lastBooking();
 
-            //get Studio name
-            if (studio.getStudioName() != null) {
-                //  emailService.sendEmail(studio.getEmail(), "Welcome Message", "Welcome to Kmart Super...");
+            //get booking SCode
+            if (booking.getSCode() != null) {
+                //  emailService.sendEmail(booking.getEmail(), "Welcome Message", "Welcome to Kmart Super...");
             }
 
-            //get Stdudio Location
-            if (studio.getStudioName() != null) {
-                //  emailService.sendEmail(studio.getEmail(), "Welcome Message", "Welcome to Kmart Super...");
-            }
+           *//* //get Stdudio Location
+            if (booking.getbookingName() != null) {
+                //  emailService.sendEmail(booking.getEmail(), "Welcome Message", "Welcome to Kmart Super...");
+            }*//*
 
-            if (studio.getId() == null) {
-                //if there is not studio in db
-                Studio DBStudio = studioService.lastStudio();
+           *//* if (booking.getId() == null) {
+                //if there is not booking in db
+                booking DBbooking = bookingService.lastbooking();
 
-                if (DBStudio == null) {
+                if (DBbooking == null) {
                     //need to generate new one
-                    studio.setCode("St" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
+                    booking.setCode("St" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
                 } else {
-                    System.out.println("last studio not null");
-                    //if there is studio in db need to get that studio's code and increase its value
-                    String previousCode = DBStudio.getCode().substring(2);
-                    studio.setCode("St" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
+                    System.out.println("last booking not null");
+                    //if there is booking in db need to get that booking's code and increase its value
+                    String previousCode = DBbooking.getCode().substring(2);
+                    booking.setCode("St" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
                 }
 
-            }
+            }*//*
         }
-        redirectAttributes.addFlashAttribute("studioDetail",
-                studioService.persist(studio));
-        return "redirect:/studio";
+        redirectAttributes.addFlashAttribute("bookingDetail",
+                bookingService.persist(booking));
+        return "redirect:/booking";
     }
 
+*/
 
-
-    @GetMapping("/edit/{id}")
+  /*  @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
-        return commonThings(model, studioService.findById(id), false);
+        return commonThings(model, bookingService.findById(id), false);
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Integer id, Model model) {
-        studioService.delete(id);
-        return "redirect:/studio";
+        bookingService.delete(id);
+        return "redirect:/booking";
     }
 
     @GetMapping("/{id}")
     public String view(@PathVariable Integer id, Model model) {
-        model.addAttribute("studioDetail", studioService.findById(id));
-        return "studio/studio-detail";
-    }
+        model.addAttribute("bookingDetail", bookingService.findById(id));
+        return "booking/booking-detail";
+    }*/
 }

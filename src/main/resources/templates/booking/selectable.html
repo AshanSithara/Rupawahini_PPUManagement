@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset='utf-8' />
-<link href='../fullcalendar.css' rel='stylesheet' />
-<link href='../fullcalendar.print.css' rel='stylesheet' media='print' />
-<script src='../lib/moment.min.js'></script>
-<script src='../lib/jquery.min.js'></script>
-<script src='../fullcalendar.min.js'></script>
+	<link th:href="@{/css/fullcalendar.css}" rel='stylesheet' />
+	<link th:href="@{/css/fullcalendar.print.css}" rel='stylesheet' media='print' />
+	<script th:src="@{/js/jquery.min.js}"></script>
+
 <script>
 
 	$(document).ready(function() {
@@ -21,13 +20,21 @@
 			selectable: true,
 			selectHelper: true,
 			select: function(start, end) {
-				var title = prompt('Event Title:');
+				var title = prompt('Event title:');
+
+				//JSon object
+				/*let jsOb = new Object();*/
+				const jsOb = {};
+				jsOb.SCode = title;
+				let jsonString = JSON.stringify(jsOb);
+				$.post('selectable', jsonString);
+
+
 				var eventData;
 				if (title) {
 					eventData = {
 						title: title,
-						start: start,
-						end: end
+
 					};
 					$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
 				}
@@ -114,7 +121,13 @@
 </head>
 <body>
 
-	<div id='calendar'></div>
+
+<script th:src="@{/js/moment.min.js}"></script>
+<script th:src="@{/js/fullcalendar.js}"></script>
+
+
+
+<div id='calendar'></div>
 
 </body>
 </html>

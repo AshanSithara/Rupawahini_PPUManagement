@@ -2,6 +2,7 @@ package lk.rupavahini.PPUManagement.asset.employee.controller;
 
 import lk.rupavahini.PPUManagement.asset.commonAsset.model.Enum.CivilStatus;
 import lk.rupavahini.PPUManagement.asset.commonAsset.model.Enum.Gender;
+import lk.rupavahini.PPUManagement.asset.commonAsset.model.Enum.Title;
 import lk.rupavahini.PPUManagement.asset.commonAsset.service.CommonService;
 import lk.rupavahini.PPUManagement.asset.employee.entity.Employee;
 import lk.rupavahini.PPUManagement.asset.employee.entity.EmployeeFiles;
@@ -50,10 +51,12 @@ public class EmployeeController {
 
     // Common things for an employee add and update
     private String commonThings(Model model) {
+        model.addAttribute("title", Title.values());
         model.addAttribute("gender", Gender.values());
         model.addAttribute("designation", Designation.values());
         model.addAttribute("civilStatus", CivilStatus.values());
         model.addAttribute("employeeStatus", EmployeeStatus.values());
+
 
         return "employee/addEmployee";
     }
@@ -159,8 +162,15 @@ public class EmployeeController {
     }
 
     //If need to employee {but not applicable for this }
-    @GetMapping(value = "/remove/{id}")
+  /*  @GetMapping(value = "/remove/{id}")
     public String removeEmployee(@PathVariable Integer id) {
+        employeeService.delete(id);
+        return "redirect:/employee";
+    }*/
+
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id, Model model) {
         employeeService.delete(id);
         return "redirect:/employee";
     }

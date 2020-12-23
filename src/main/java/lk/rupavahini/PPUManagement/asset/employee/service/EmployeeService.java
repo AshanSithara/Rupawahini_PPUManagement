@@ -43,11 +43,15 @@ public class EmployeeService implements AbstractService<Employee, Integer> {
         return employeeDao.save(employee);
     }
 
-    @CacheEvict(allEntries = true)
+   /* @CacheEvict(allEntries = true)
     public boolean delete(Integer id) {
         employeeDao.deleteById(id);
         return false;
-    }
+    }*/
+   public boolean delete(Integer id) {
+       employeeDao.deleteById(id);
+       return false;
+   }
 
     @Cacheable
     public List<Employee> search(Employee employee) {

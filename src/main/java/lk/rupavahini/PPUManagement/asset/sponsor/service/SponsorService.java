@@ -1,7 +1,7 @@
-package lk.rupavahini.PPUManagement.asset.sponser.service;
+package lk.rupavahini.PPUManagement.asset.sponsor.service;
 
-import lk.rupavahini.PPUManagement.asset.sponser.dao.SponsorDao;
-import lk.rupavahini.PPUManagement.asset.sponser.entity.Sponsor;
+import lk.rupavahini.PPUManagement.asset.sponsor.dao.SponsorDao;
+import lk.rupavahini.PPUManagement.asset.sponsor.entity.Sponsor;
 import lk.rupavahini.PPUManagement.util.interfaces.AbstractService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Example;
@@ -41,8 +41,8 @@ public class SponsorService implements AbstractService<Sponsor, Integer> {
                 .matching()
                 .withIgnoreCase()
                 .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-        Example<Sponsor> SponserExample = Example.of(sponsor, matcher);
-        return sponsorDao.findAll(SponserExample);
+        Example<Sponsor> SponsorExample = Example.of(sponsor, matcher);
+        return sponsorDao.findAll(SponsorExample);
     }
 
     public Sponsor lastSponsor(){

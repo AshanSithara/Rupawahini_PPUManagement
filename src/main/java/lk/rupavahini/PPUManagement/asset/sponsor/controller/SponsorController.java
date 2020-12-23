@@ -1,9 +1,8 @@
-package lk.rupavahini.PPUManagement.asset.sponser.controller;
+package lk.rupavahini.PPUManagement.asset.sponsor.controller;
 
 
-import lk.rupavahini.PPUManagement.asset.sponser.entity.Sponsor;
-import lk.rupavahini.PPUManagement.asset.sponser.service.SponsorService;
-import lk.rupavahini.PPUManagement.util.interfaces.AbstractController;
+import lk.rupavahini.PPUManagement.asset.sponsor.entity.Sponsor;
+import lk.rupavahini.PPUManagement.asset.sponsor.service.SponsorService;
 import lk.rupavahini.PPUManagement.util.service.MakeAutoGenerateNumberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +33,7 @@ public class SponsorController {
 
     @GetMapping
     public String findAll(Model model) {
-        model.addAttribute("suppliers", sponsorService.findAll());
+        model.addAttribute("sponsor", sponsorService.findAll());
         return "sponsor/sponsor";
     }
 
@@ -58,15 +57,15 @@ public class SponsorController {
         //if sponsor has id that sponsor is not a new sponsor
         if (sponsor.getId() == null) {
             //if there is not sponsor in db
-            Sponsor DBSupplier = sponsorService.lastSponsor();
+            Sponsor DBSponsor = sponsorService.lastSponsor();
 
-            if (DBSupplier == null) {
+            if (DBSponsor == null) {
                 //need to generate new one
                 sponsor.setCode("SS" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
             } else {
                 System.out.println("last sponsor not null");
                 //if there is sponsor in db need to get that sponsor's code and increase its value
-                String previousCode = DBSupplier.getCode().substring(2);
+                String previousCode = DBSponsor.getCode().substring(2);
                 sponsor.setCode("SS" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
             }
             //send welcome message and email

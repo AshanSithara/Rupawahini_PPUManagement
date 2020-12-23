@@ -46,7 +46,21 @@
 
                                             </div>
 
-                                            <!--Name-->
+                                            <!--Tittle -->
+                                                <div class="form-group">
+                                                    <div class="col-md-4" >
+                                                        <label class="control-label" for="title" >Title :</label >
+                                                    </div >
+                                                    <select id="title" data-th-field="*{title}" class="form-control" tabindex="3" required >
+                                                        <option value="" >Please select</option >
+                                                        <option data-th-each="titles : ${title}"
+                                                                data-th-text="${titles.title}"
+                                                                data-th-value="${titles}"
+                                                                data-th-selected="${titles==employee.title?'selected':'unselected'}" ></option >
+                                                    </select >
+                                                </div>
+
+                                                <!--Name-->
                                             <div class="form-group">
 
                                                 <label class="control-label" for="name">Name :</label>

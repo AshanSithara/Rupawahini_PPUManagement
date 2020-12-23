@@ -30,12 +30,12 @@ public class ProgrammeController {
     private String commonThings(Model model, Programme programme, Boolean addState) {
         model.addAttribute("programme", programme);
         model.addAttribute("addStatus", addState);
-        return "programme/addSponsor";
+        return "programme/addProgramme";
     }
 
     @GetMapping
     public String findAll(Model model) {
-        model.addAttribute("suppliers", programmeService.findAll());
+        model.addAttribute("programme", programmeService.findAll());
         return "programme/programme";
     }
 
@@ -66,7 +66,7 @@ public class ProgrammeController {
                 programme.setCode("SS" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
             }
         }
-        redirectAttributes.addFlashAttribute("sponsorDetail",
+        redirectAttributes.addFlashAttribute("programmeDetail",
                 programmeService.persist(programme));
         return "redirect:/programme";
     }
@@ -84,7 +84,7 @@ public class ProgrammeController {
 
     @GetMapping("/{id}")
     public String view(@PathVariable Integer id, Model model) {
-        model.addAttribute("sponsorDetail", programmeService.findById(id));
+        model.addAttribute("programmeDetail", programmeService.findById(id));
         return "programme/programme-detail";
     }
 }

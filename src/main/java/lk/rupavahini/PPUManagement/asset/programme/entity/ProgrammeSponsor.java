@@ -2,7 +2,7 @@ package lk.rupavahini.PPUManagement.asset.programme.entity;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 
-import lk.rupavahini.PPUManagement.asset.sponser.entity.Sponsor;
+import lk.rupavahini.PPUManagement.asset.sponsor.entity.Sponsor;
 import lk.rupavahini.PPUManagement.util.audit.AuditEntity;
 import lombok.*;
 

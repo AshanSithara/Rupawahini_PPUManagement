@@ -1,7 +1,7 @@
-package lk.rupavahini.PPUManagement.asset.sponser.dao;
+package lk.rupavahini.PPUManagement.asset.sponsor.dao;
 
 
-import lk.rupavahini.PPUManagement.asset.sponser.entity.Sponsor;
+import lk.rupavahini.PPUManagement.asset.sponsor.entity.Sponsor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
